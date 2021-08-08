@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: nginx1212
+  labels:
+      owner: "Nitin"
+      costcenter: "12121221212"
+      projectname: "devops"
+spec:
+ containers:
+  - name: nginx
+    image: abcdwewe 

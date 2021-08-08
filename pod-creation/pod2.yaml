@@ -1,0 +1,13 @@
+apiVersion: v1    ## kubernetes API version to be used for mentioned object
+kind: Pod      ## Type of object you are creating, in this case it is Pod, other options are deployment/statefulset/replicaset
+metadata: 
+  name: secondpod
+  labels:
+     owner: yogesh
+     tier: db
+     costcenter: "12334"
+     environment: prod
+spec:
+  containers: 
+  - name: mycontainer
+    image: nginx

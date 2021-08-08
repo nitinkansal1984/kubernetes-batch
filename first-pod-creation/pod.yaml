@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+    name: myfirstpod
+    labels:
+       env: dev
+       owner: nitin
+       costcenter: "12345"
+spec:
+  containers:
+       - name: mycontainer
+         image: ubuntu
+  restartPolicy: Never
