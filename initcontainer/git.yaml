@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: git-container
+  labels:
+    owner: nitin
+spec:
+      restartPolicy: Always
+      containers:
+      - name: main
+        image: nitinkansal/goldenimage:latest
+        volumeMounts:
+        - name: service
+          mountPath: /var/www
+      initContainers:
+        - image: k8s.gcr.io/git-sync:v3.1.6
+          name: git-sync-sidecar
+          args:
+            - "-repo=git@github.com:nitinkansal1984/argo-nginx-sourcecode.git"
+            - "-branch=main"
+            - "-depth=1"
+            - "-max-sync-failures=-1"
+            - "-root=/temp"
+            - "-dest=html"
+            - "-wait=60"
+            - "-ssh=true"
+            - "-ssh-key-file=/etc/git-secret/ssh"
+            - "-ssh-known-hosts-file=/etc/git-secret/known_hosts"
+            - "-one-time=true"  
+          volumeMounts:
+            - name: git-secret
+              mountPath: /etc/git-secret
+              readOnly: true
+            - name: service
+              mountPath: /temp
+      securityContext:
+          runAsUser: 0
+      volumes:
+      - name: service
+        emptyDir: {}
+      - name: git-secret
+        secret:
+          defaultMode: 256
+          secretName: gitsecret # your-ssh-key

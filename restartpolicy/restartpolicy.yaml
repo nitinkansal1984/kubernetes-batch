@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+  labels:
+     projectname: myproject
+spec:
+  containers:
+          - name: hello
+            image: ubuntu
+  restartPolicy: Never

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-issue
+spec:
+  containers:
+  - name: web
+    image: badimage
+
+  initContainers:
+  - name: 1stcontainer
+    image: ubuntu
+    command: ['sleep', '10']
+
+  - name: 2ndcontainer
+    image: alpine
+    command: ['sleep', '10']

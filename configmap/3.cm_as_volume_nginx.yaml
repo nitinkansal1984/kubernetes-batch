@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: static-files
+data:
+  index.html: |
+    <html><head><title>End of the Internet</title></head>
+    <body><h1>The End of the Internet</h1>
+    <p>You have reached the end of the Internet.
+    Feel free to go outside now.</p>
+    </body></html>
+    
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: website
+spec:
+  volumes:
+    - name: static-files
+      configMap:
+        name: static-files
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+        - name: static-files
+          mountPath: /usr/share/nginx/html

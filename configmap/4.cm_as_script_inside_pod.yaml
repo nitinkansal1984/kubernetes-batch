@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bins
+data:
+  hello: |
+    #!/bin/sh
+    echo "Hello, ConfigMap!" 
+    exec sleep 86400
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hiya
+spec:
+
+  volumes:
+    - name: vol1
+      configMap:
+        name: bins
+        defaultMode: 0755  
+
+  containers:
+    - name: hiya
+      image: ubuntu
+
+      volumeMounts:
+        - name: vol1
+          mountPath: /usr/local/bin
+        - name: vol1
+          mountPath: /etc/myscript
+
+      command:
+        - /usr/local/bin/hello
