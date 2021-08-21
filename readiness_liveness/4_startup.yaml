@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: startup
+  name: startup-exec
+spec:
+  containers:
+  - name: test-app-api
+    image: andrewlock/my-test-api:0.1.1
+    startupProbe:
+      httpGet:
+        path: /health/startup
+        port: 80
+      failureThreshold: 30
+      periodSeconds: 10
+
+#Thanks to the startup probe, the application will have a maximum of 5 minutes (30 * 10 = 300s) to finish its startup. Once the startup probe has succeeded once, the liveness probe takes over to provide a fast response to container deadlocks. If the startup probe never succeeds, the container is killed after 300s and subject to the pod's restartPolicy.
+
+#As soon as the startup probe succeeds once it never runs again for the lifetime of that container. If the startup probe never succeeds, Kubernetes will eventually kill the container, and restart the pod.
