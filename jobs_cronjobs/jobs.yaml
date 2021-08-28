@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: busybox
+spec:
+#  completions: 2
+#  parallelism: 2
+#  backoffLimit: 2
+#  activeDeadlineSeconds: 100
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+#        command: ["echo",  "hello Kubernetes Jobsi !!!"]
+        command: ["ls", "/nitin"]   ## understand this command with backofflimit  
+#        command: ["sleep", "60"]    ## Understand sleep command behaviour with activedeadlineseconds attribute
+      restartPolicy: Never

@@ -1,0 +1,6 @@
+  strategy:
+    type: Recreate
+
+kubectl.exe run curl --rm  -it --image curlimages/curl  -- sh
+while true; do curl --silent 10.43.94.133 | grep Welcome; echo  waiting for 1 sec; sleep 1; done
+
